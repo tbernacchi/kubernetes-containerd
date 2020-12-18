@@ -1,4 +1,4 @@
-<h1 align="center">Kubernetes setup with containerd runtime 👋</h1>
+<h1 align="">Kubernetes setup with containerd runtime 👋</h1>
 <p>
 </p>
 
