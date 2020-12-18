@@ -5,11 +5,14 @@
 > Kubernetes cluster setup with containerd runtime instead of Docker 
 
 ![Kubernetes](/.github/assets/img/kubernetes-logo.png)
-![Containerd](/.github/assets/img/containerd.png)
+
+<div align=>
+	<img align="center" src=/.github/assets/img/containerd.png>
+</div> 
 
 ## Table of Contents
 
-* **Containerd
+* **Containerd**
   * [Offical Website](https://containerd.io/)
   * [Offical Docs](https://containerd.io/docs/)
   * [Official Github](https://github.com/containerd/containerd)
