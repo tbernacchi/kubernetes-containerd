@@ -1,0 +1,7 @@
+---
+# handlers file for common
+- name: enable kubelet
+  service: name=kubelet enabled=yes
+
+- name: start kubelet
+  service: name=kubelet state=started

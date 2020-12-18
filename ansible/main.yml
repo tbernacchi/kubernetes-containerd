@@ -1,0 +1,31 @@
+- hosts: cluster
+  remote_user: ubuntu
+  become: yes
+  roles:
+  - common
+  - containerd
+  - kubernetes
+  tags: alltogether
+
+- hosts: master
+  remote_user: ubuntu
+  become: yes
+  roles:
+  - master
+  tags: master
+
+- hosts: master
+  become: yes
+  user: ubuntu
+  tasks:
+    - include_role:
+        name: master
+        tasks_from: token
+  tags: token
+
+- hosts: nodes
+  become: yes
+  user: ubuntu 
+  roles:
+  - nodes
+  tags: nodes

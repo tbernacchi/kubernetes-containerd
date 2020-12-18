@@ -1,0 +1,6 @@
+- name: Generate join command
+  shell: kubeadm token create --print-join-command > /tmp/join-command
+
+- name: Fetch the file /tmp/join-command from master
+  run_once: yes
+  fetch: src=/tmp/join-command dest=buffer/ flat=yes

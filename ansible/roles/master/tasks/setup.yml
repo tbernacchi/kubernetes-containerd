@@ -1,0 +1,58 @@
+- name: Check if the master it's already in Ready state
+  shell: kubectl get nodes | grep master| awk "{ print $2 }"
+  register: master_ready 
+
+- name: Reset Cluster
+  command: >
+    kubeadm reset --force
+  register: kubeadm_reset
+  when: master_ready is failed
+
+- name: Pulling images
+  shell: kubeadm config images pull
+
+- name: Initialize Kubernetes master with kubeadm init.
+  command: > 
+    kubeadm init 
+  #register: kubeadmin_init
+ #when: admin_conf.stat.exists == False
+
+- name: Wait kubeadm init finish
+  wait_for:
+    timeout: 20
+
+- name: Ensure .kube directory exists.
+  file:
+    path: ~/.kube
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+
+- name: Copy default cluster configuration
+  shell: cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+  args: 
+    chdir: $HOME
+    creates: $HOME/.kube/config
+
+- name: Change config mode
+  file:
+    path: $HOME/.kube/config
+    state: file
+    owner: root
+    group: root 
+    mode: 0660
+
+- name: Put template kubelet file
+  template: 
+    src: kubelet-config.yml.j2
+    dest: /var/lib/kubelet/config.yaml
+    owner: root
+    group: root 
+
+- name: Setting the container network interface - Weave CNI
+  shell: kubectl apply -f {{ default_url_weavenet }}
+  register: weavenet_result
+
+- name: Enable start kubelet
+  systemd: name=kubelet state=started enabled=yes

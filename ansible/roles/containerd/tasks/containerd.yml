@@ -1,0 +1,71 @@
+- name: Template /etc/modules-load.d/containerd.conf
+  template:
+    src: ../templates/containerd.conf
+    dest: /etc/modules-load.d/containerd.conf
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: sysctl --system
+  shell: "sysctl --system"
+
+- name: Get containerd-{{ CONTAINERD_VERSION }}-linux-amd64.tar.gz
+  get_url:
+    url: https://github.com/containerd/containerd/releases/download/v{{ CONTAINERD_VERSION }}/containerd-{{ CONTAINERD_VERSION }}-linux-amd64.tar.gz
+    dest: /opt/containerd-{{ CONTAINERD_VERSION }}-linux-amd64.tar.gz
+    mode: '0644'
+
+- name: Template install-containerd.sh 
+  template: 
+    src: ../templates/install-containerd.yml.j2
+    dest: /opt/install-containerd.sh
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Run /opt/install-containerd.sh
+  command: chdir=/opt/ sh install-containerd.sh 
+
+- name: Get runc-{{ RUNC_VERSION }}.amd64
+  get_url: 
+    url: https://github.com/opencontainers/runc/releases/download/{{ RUNC_VERSION }}/runc.amd64
+    dest: /usr/local/sbin/runc
+    mode: '0755'
+
+- name: Ensure /etc/systemd/system/kubelet.service.d directory exists
+  file:
+    path: /etc/systemd/system/kubelet.service.d
+    state: directory
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Template containerd.service
+  template:
+    src: ../templates/containerd.service
+    dest: /etc/systemd/system/containerd.service
+    owner: root
+    group: root
+    mode: '0755'
+  notify: 
+  - daemon reload 
+
+- name: Enable containerd service
+  systemd: name=containerd enabled=yes
+
+- name: Start containerd service
+  systemd: name=containerd state=started 
+
+- name: Template kubelet.service.d/0-containerd.conf
+  template:
+    src: ../templates/0-containerd.conf
+    dest: /etc/systemd/system/kubelet.service.d/0-containerd.conf
+    owner: root
+    group: root
+    mode: '0755'
+
+- name: Reload daemon-reload 
+  systemd: daemon_reload=yes
+
+- name: Restart containerd service
+  systemd: name=containerd state=restarted

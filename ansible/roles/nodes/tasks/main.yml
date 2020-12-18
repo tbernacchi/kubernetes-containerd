@@ -1,0 +1,17 @@
+---
+# tasks file for nodes
+
+- name: Kubeadm reset
+  shell: kubeadm reset -f >> reset.log
+  args: 
+    chdir: $HOME
+    creates: reset.log
+
+- name: Copy join-command file from buffer (local file) to nodes
+  copy: src=buffer/join-command dest=/usr/local/bin/join-command.sh mode=0755
+
+- name: Running join-command on nodes 
+  command: sh /usr/local/bin/join-command.sh >> node.log
+  args: 
+    chdir: $HOME
+    creates: node.log
