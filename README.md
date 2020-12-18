@@ -2,13 +2,10 @@
 <p>
 </p>
 
-![Kubernetes](/.github/assets/img/kubernetes-logo.png)
-
-<div align=>
-	<img align="right" width="200px" src=/.github/assets/img/containerd.png>
-</div> 
-
 > Kubernetes setup with containerd runtime
+
+![Kubernetes](/.github/assets/img/kubernetes-logo.png)
+![Containerd](/.github/assets/img/containerd.png)
 
 ## Table of Contents
 
