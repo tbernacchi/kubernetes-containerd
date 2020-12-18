@@ -1,9 +1,12 @@
 <h1 align="center">Welcome to kubernetes-containerd 👋</h1>
 <p>
-  <a href="https://twitter.com/tadeuuuuu" target="_blank">
-    <img alt="Twitter: tadeuuuuu" src="https://img.shields.io/twitter/follow/tadeuuuuu.svg?style=social" />
-  </a>
 </p>
+
+![Kubernetes](/.github/assets/img/kubernetes-logo.png)
+
+<div align=>
+	<img align="right" width="200px" src=/.github/assets/img/containerd.png>
+</div> 
 
 > Kubernetes setup with containerd runtime
 
