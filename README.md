@@ -1,8 +1,8 @@
-<h1 align="center">Welcome to kubernetes-containerd 👋</h1>
+<h1 align="center">Kubernetes setup with containerd runtime 👋</h1>
 <p>
 </p>
 
-> Kubernetes setup with containerd runtime
+> Kubernetes cluster setup with containerd runtime instead of Docker 
 
 ![Kubernetes](/.github/assets/img/kubernetes-logo.png)
 ![Containerd](/.github/assets/img/containerd.png)
