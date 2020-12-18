@@ -7,8 +7,9 @@
 ![Kubernetes](/.github/assets/img/kubernetes-logo.png)
 
 <div align=>
-	<img align="center" src=/.github/assets/img/containerd.png>
+	<img align="right" width="200px" src=/.github/assets/img/containerd.png>
 </div> 
+
 
 ## Table of Contents
 
