@@ -2,7 +2,7 @@
 <p>
 </p>
 
-> Kubernetes cluster setup with containerd runtime instead of Docker 
+> Kubernetes cluster setup with containerd runtime instead of Docker. 
 
 ![Kubernetes](/.github/assets/img/kubernetes-logo.png)
 
