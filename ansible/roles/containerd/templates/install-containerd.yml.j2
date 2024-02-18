@@ -1,2 +1,5 @@
 #!/bin/bash 
-/bin/tar -xzf containerd-{{ CONTAINERD_VERSION }}-linux-amd64.tar.gz -C /usr/local/
+/bin/tar -xzf containerd-{{ CONTAINERD_VERSION }}-linux-arm64.tar.gz -C /usr/local/
+`which crictl` config --set runtime-endpoint=unix:///var/run/containerd/containerd.sock
+/bin/tar -xzf crictl-{{ CRICTL_VERSION }}-linux-arm64.tar.gz -C /usr/local/bin
+

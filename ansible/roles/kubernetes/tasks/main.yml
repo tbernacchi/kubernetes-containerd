@@ -1,4 +1,4 @@
 ---
 # tasks file for kubernetes
-- include: kernel.yml 
-- include: k8s.yml 
+- include_tasks: kernel.yml 
+- include_tasks: k8s.yml 

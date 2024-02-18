@@ -1,4 +1,4 @@
-- hosts: cluster
+- hosts: master
   remote_user: ubuntu
   become: yes
   roles:
@@ -7,12 +7,12 @@
   - kubernetes
   tags: alltogether
 
-- hosts: master
+- hosts: apiserver 
   remote_user: ubuntu
   become: yes
   roles:
   - master
-  tags: master
+  tags: apiserver
 
 - hosts: master
   become: yes
@@ -29,3 +29,12 @@
   roles:
   - nodes
   tags: nodes
+
+- hosts: workers 
+  become: yes
+  user: ubuntu 
+  roles:
+  #- common 
+  #- containerd  
+  - kubernetes 
+  tags: kubernetes 

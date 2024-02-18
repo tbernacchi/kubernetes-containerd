@@ -1,3 +1,3 @@
 ---
 # tasks file for common
-- include: adjust.yml
+- include_tasks: adjust.yml

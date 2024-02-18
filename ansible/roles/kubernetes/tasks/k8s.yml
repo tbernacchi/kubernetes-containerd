@@ -13,6 +13,6 @@
     name: "{{ packages }}"
   vars:
     packages:
-    - kubelet=1.19.4-00
-    - kubeadm=1.19.4-00
-    - kubectl=1.19.4-00
+    - kubelet={{ K8S_VERSION }} 
+    - kubeadm={{ K8S_VERSION }}
+    - kubectl={{ K8S_VERSION }}

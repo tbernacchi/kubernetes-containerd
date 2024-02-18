@@ -9,10 +9,10 @@
 - name: sysctl --system
   shell: "sysctl --system"
 
-- name: Get containerd-{{ CONTAINERD_VERSION }}-linux-amd64.tar.gz
+- name: Get containerd-{{ CONTAINERD_VERSION }}-linux-arm64.tar.gz
   get_url:
-    url: https://github.com/containerd/containerd/releases/download/v{{ CONTAINERD_VERSION }}/containerd-{{ CONTAINERD_VERSION }}-linux-amd64.tar.gz
-    dest: /opt/containerd-{{ CONTAINERD_VERSION }}-linux-amd64.tar.gz
+    url: https://github.com/containerd/containerd/releases/download/v{{ CONTAINERD_VERSION }}/containerd-{{ CONTAINERD_VERSION }}-linux-arm64.tar.gz
+    dest: /opt/containerd-{{ CONTAINERD_VERSION }}-linux-arm64.tar.gz
     mode: '0644'
 
 - name: Template install-containerd.sh 
@@ -23,12 +23,9 @@
     group: root
     mode: '0755'
 
-- name: Run /opt/install-containerd.sh
-  command: chdir=/opt/ sh install-containerd.sh 
-
-- name: Get runc-{{ RUNC_VERSION }}.amd64
+- name: Get runc-{{ RUNC_VERSION }}.arm64
   get_url: 
-    url: https://github.com/opencontainers/runc/releases/download/{{ RUNC_VERSION }}/runc.amd64
+    url: https://github.com/opencontainers/runc/releases/download/{{ RUNC_VERSION }}/runc.arm64
     dest: /usr/local/sbin/runc
     mode: '0755'
 
@@ -49,6 +46,21 @@
     mode: '0755'
   notify: 
   - daemon reload 
+
+- name: Get containerd.service file 
+  get_url: 
+    url: https://raw.githubusercontent.com/containerd/containerd/main/containerd.service
+    dest: /opt/containerd.service
+    mode: '0644'
+
+- name: Get crictl 
+  get_url: 
+    url: https://github.com/kubernetes-sigs/cri-tools/releases/download/{{ CRICTL_VERSION }}/crictl-{{ CRICTL_VERSION }}-linux-arm64.tar.gz
+    dest: /opt/crictl-{{ CRICTL_VERSION }}-linux-arm64.tar.gz
+    mode: '0644'
+
+- name: Run /opt/install-containerd.sh
+  command: chdir=/opt/ sh install-containerd.sh 
 
 - name: Enable containerd service
   systemd: name=containerd enabled=yes

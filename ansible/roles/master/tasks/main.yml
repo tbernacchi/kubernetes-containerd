@@ -1,4 +1,5 @@
 ---
 # tasks file for master
-- include: setup.yml 
-- include: token.yml 
+- include_tasks: kernel.yml 
+- include_tasks: setup.yml 
+- include_tasks: token.yml 

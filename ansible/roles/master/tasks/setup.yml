@@ -1,25 +1,24 @@
-- name: Check if the master it's already in Ready state
-  shell: kubectl get nodes | grep master| awk "{ print $2 }"
-  register: master_ready 
+#- name: Check if the master it's already in Ready state
+#  shell: kubectl get nodes | grep -i control-plane | awk "{ print $2 }"
+#  register: master_ready 
 
 - name: Reset Cluster
   command: >
     kubeadm reset --force
   register: kubeadm_reset
-  when: master_ready is failed
+  #when: master_ready is failed
 
 - name: Pulling images
   shell: kubeadm config images pull
 
 - name: Initialize Kubernetes master with kubeadm init.
   command: > 
-    kubeadm init 
-  #register: kubeadmin_init
- #when: admin_conf.stat.exists == False
+    kubeadm init --apiserver-advertise-address {{ ansible_eth1.ipv4.address }} --skip-token-print --pod-network-cidr={{ POD_NETWORK_CIDR }} --ignore-preflight-errors=all
+  #when: master_ready is failed
 
 - name: Wait kubeadm init finish
   wait_for:
-    timeout: 20
+    timeout: 40
 
 - name: Ensure .kube directory exists.
   file:
@@ -43,16 +42,16 @@
     group: root 
     mode: 0660
 
-- name: Put template kubelet file
-  template: 
-    src: kubelet-config.yml.j2
-    dest: /var/lib/kubelet/config.yaml
-    owner: root
-    group: root 
+#- name: Put template kubelet file
+#  template: 
+#    src: kubelet-config.yml.j2
+#    dest: /var/lib/kubelet/config.yaml
+#    owner: root
+#    group: root 
 
-- name: Setting the container network interface - Weave CNI
-  shell: kubectl apply -f {{ default_url_weavenet }}
-  register: weavenet_result
+- name: Setting CNI Calico 
+  shell: kubectl apply -f {{ calico_url }}
+  register: calico_url 
 
 - name: Enable start kubelet
   systemd: name=kubelet state=started enabled=yes
