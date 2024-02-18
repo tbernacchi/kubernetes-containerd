@@ -1,4 +1,4 @@
-# Kubeadm cluster 
+# kubeadm cluster v1.27.0
 
 Ansible playbook to deploy a kubeadm kubernetes cluster.
 
@@ -23,9 +23,8 @@ Python 3.8.10
 * Remove template file /var/lib/kubelet/config.yaml;
 * Setup CNI Calico rather than Weave
 
-```
 ## Usage
-You have to be able to reach port 22 (SSH) and resolve the hosts, in this case I put it in my ```/etc/hosts```;
+You have to be able to reach port 22 (SSH) and resolve the hosts, in this case I've put all my hosts on  ```/etc/hosts```;
 
 ```bash
 ansible -i hosts all -m ping
