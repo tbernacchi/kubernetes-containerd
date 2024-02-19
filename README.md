@@ -10,6 +10,9 @@
 	<img align="right" width="200px" src=/.github/assets/img/containerd.png>
 </div> 
 
+> For this lab I've used this repo for my machines:
+* [kubeadm-2024](https://github.com/tbernacchi/vagrant/tree/master/kubeadm-2024)
+
 ## Table of Contents
 
 * **Kubernetes**  
