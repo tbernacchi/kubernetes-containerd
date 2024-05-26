@@ -1,11 +1,12 @@
-- name: Add Apt signing key for k8s
+- name: Add k8s apt keyring
   apt_key:
-    url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+    url: https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key
+    keyring: /etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg
     state: present
 
-- name: Add k8s repository
+- name: Adicionar o repositório do Kubernetes
   apt_repository:
-    repo: deb http://apt.kubernetes.io/ kubernetes-xenial main
+    repo: "deb [signed-by=/etc/apt/trusted.gpg.d/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /"
     state: present
 
 - name: Install k8s packages
